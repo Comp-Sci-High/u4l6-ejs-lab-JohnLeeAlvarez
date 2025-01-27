@@ -27,7 +27,7 @@ const inventory = [
         cost: 89.99,
         imageUrl: "https://i.ebayimg.com/images/g/knUAAOSwA-RjyIAG/s-l1200.jpg",
         path: "/item/2",
-        quantity: 50,
+        quantity: 0,
         colors: ["red", "black", "white"]
       }
     ]
@@ -86,24 +86,42 @@ app.get ("/", (req, res) =>{
 
 // Task 3: Set up the route handler for /mens which sends back category.ejs with the men's array
 app.get ("/mens", (req, res) =>{
-  res.sendFile(__dirname + "/views/category.ejs")
+  res.render("category.ejs", inventory[0])
 })
 
 
 // Task 4: Plug in the values in category.ejs to get the page working
 // PINK ONLY: Set up a route handler for /womens to pass in similar data for women's
 
+app.get ("/womens", (req, res) =>{
+  res.render("category.ejs", inventory[1])
+})
 
 
 // Task 5: Set up the route handler for /item/0 which sends back the first item in product.ejs
-app.get ("/item/0", (req, res) =>{
-  res.sendFile(__dirname + "/views/category.ejs")
-})
 
+
+//app.get ("/item/0", (req, res) =>{
+//  res.render("product.ejs", inventory[0].items[0])
+//})
+
+app.get ("/item/:id", (req, res) =>{
+  const id = req.params.id
+  res.render("product.ejs", inventory[0].items[id])
+  })
+
+  
+app.get ("/item/:id", (req, res) =>{
+  const id = req.params.id
+  res.render("product.ejs", inventory[1].items[id])
+  })
 
 
 // Task 6: Plug in the values in product.ejs to get the page working
 // Extra credit: modify the /item/0 route handler to have dynamic path parameter and return any item's data
+
+
+
 
 app.listen(3000, () => {
   console.log("Server running")
